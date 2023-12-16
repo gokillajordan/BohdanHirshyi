@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: gokilla-service
+spec:
+   strategy:
+    type: Recreate
+   selector:
+    matchLabels:
+      app: gokilla-service
+   template:
+    metadata:
+      labels:
+        app: gokilla-service
+    spec:
+      containers:
+      - name: gokilla-service
+        image: jordan/gokilla-service:latest
+        imagePullPolicy: Always
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: GokillaServicePath
+          value: /usr/data
+        ports:
+        - containerPort: 5005
+        volumeMounts:
+        - name: sqlite-volume
+          mountPath: /usr/data
+      volumes:
+      - name: sqlite-volume
+        persistentVolumeClaim:
+          claimName: sqlite-pvc
+
+  

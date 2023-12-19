@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+   name: desire-app-updated
+   labels:
+    app: desire-app
+spec:
+  ports:
+  - port: 5005
+    targetPort: 80
+  selector:
+    app: desire-app
+  type: LoadBalancer
+
+  
